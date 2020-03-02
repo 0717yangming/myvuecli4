@@ -1,129 +1,165 @@
 <template>
   <div class="show_commodity" :style="{width: _width}">
+      <Navbar @mouseon="curClassify"></Navbar>
         <div class="searchbar">
-        <input type="text" id="search" value="查询商品" 
-        onfocus="if(value=='查询商品')value=''" onblur="if(!value)value='查询商品'" v-model="keyword" > 
-       <img src='~assets/search.png' class="mg" 
-       @mouseover="over"
-       @mouseleave="leave"
-       :class="{activited: isActivited}">
+                <input type="text" id="search" value="查询商品" 
+                onfocus="if(value=='查询商品')value=''" onblur="if(!value)value='查询商品'" v-model="keyword" > 
+                <img src='~assets/search.png' class="mg" 
+                @mouseover="over"
+                @mouseleave="leave"
+                :class="{activited: isActivited}">
         </div>
         <div v-for="(item, index) in curShowCommodities" :key="index"
         class="commodity"
-        >
-            <img :src="item.image" :alt="item.name">
+        @mouseover="cover(index)"
+        @mouseleave="cleave"
+        :class="{commodity_activited: curIndex==index}">
+            <img :src="url+item.picName" :alt="item.name">
             <p>
                 {{item.name}}
             </p>
-            <p>
-                 {{item.price}}
+            <p class="price">
+                 {{item.price}}￥
             </p>
         </div>
   </div>
 </template>
 
 <script>
+import { request } from "@/network/request";
+import Navbar from 'comp/center_area/navbar/navbar'
 export default {
+    components: {
+       Navbar
+    },
+    mounted() {
+         request({
+            method: 'get',
+            url: 'commodity'                           
+        }).then(res => {
+            console.log(res.data)
+            this.commodities = res.data
+            this.currentshow = this.commodities
+        }).catch((req) => {
+              console.log(req)
+        })
+    },
     data(){
         return {
+            curIndex: -1,
             isActivited: false,
+            url: 'http://localhost:7170/images/',
             commodities: [
-                {   
-                    id: 1,
-                    price: '12￥',
-                    name: '台灯',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 2,
-                    price: '12￥',
-                    name: '台灯2',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 3,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 4,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 5,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 6,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                 {   
-                    id: 7,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 8,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 9,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 10,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 11,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
-                {   
-                    id: 12,
-                    price: '12￥',
-                    name: '电风扇',
-                    catalog: '生活用品',
-                    image: require('assets/airFan/dianfengshan.jpg')
-                },
+                // {   
+                //     id: 1,
+                //     price: '12￥',
+                //     name: '台灯',
+                //     catalog: '生活用品',
+                //     imagePath: "http://localhost:7170/images/96fa9c5b-074d-44a7-9a25-7f2dcfdb7b98.jpg"
+                // },
+                // {   
+                //     id: 2,
+                //     price: '12￥',
+                //     name: '台灯2',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                // {   
+                //     id: 3,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                // {   
+                //     id: 4,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                // {   
+                //     id: 5,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                // {   
+                //     id: 6,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                //  {   
+                //     id: 7,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                // {   
+                //     id: 8,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                // {   
+                //     id: 9,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                // {   
+                //     id: 10,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                // {   
+                //     id: 11,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
+                // {   
+                //     id: 12,
+                //     price: '12￥',
+                //     name: '电风扇',
+                //     catalog: '生活用品',
+                //     image: require('assets/airFan/dianfengshan.jpg')
+                // },
             ],
-            keyword: ''
+            currentshow:[],
+            keyword: '',
         }
     },
     computed: {
         curShowCommodities() {
-            return this.commodities.filter(
-                (commodity) =>  commodity.name.indexOf(this.keyword.trim())>-1
-            )
+            return this.currentshow.filter(
+                (commodity) => commodity.name.indexOf(this.keyword.trim())>-1 )
         }
     },
     methods: {
+        curClassify(classifyId){
+            if(classifyId!='')
+            this.currentshow = this.commodities.filter( c => c.classifyName.classId == classifyId)
+            else
+            this.currentshow = this.commodities
+        },
+        // 分类
+         cover(index){
+            this.curIndex = index
+        },
+        cleave(){
+             this.curIndex = -1
+        },
+        // 商品
         over(){
             this.isActivited = true
         },
@@ -183,7 +219,8 @@ export default {
     float: left;
     background-color: cyan;
     margin: 70px 16px 0 10px;
-    box-shadow: 0 0 12px rgb(104, 104, 236)
+    box-shadow: 0 0 5px rgb(104, 104, 236);
+    border-radius: 0px 0px 10px 10px;
 }
 .commodity img {
     width: 100%;
@@ -193,5 +230,13 @@ export default {
 .commodity p {
     font-size: 20px;
     color: blue; 
+}
+.commodity p .price {
+    color: red;
+    font-size: 24px;
+}
+.commodity_activited {
+    cursor: pointer;
+    box-shadow: 0 0 17px rgb(104, 104, 236)
 }
 </style>

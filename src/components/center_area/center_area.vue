@@ -1,13 +1,13 @@
 <template>
   <div class="center_area" :style="{width: _width}">
-        <Navbar></Navbar>
+        <!-- <Navbar></Navbar> -->
         <Carousel></Carousel>
         <Right></Right>
   </div>
 </template>
 
 <script>
-import Navbar from 'comp/center_area/navbar/navbar'
+// import Navbar from 'comp/center_area/navbar/navbar'
 import Carousel from 'comp/center_area/Carousel/carousel'
 import Right from 'comp/center_area/right/right'
 export default {
@@ -21,7 +21,7 @@ props: {
   }
 },
 components: {
-    Navbar,
+    // Navbar,
     Carousel,
     Right,
 },

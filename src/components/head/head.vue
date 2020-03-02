@@ -1,12 +1,25 @@
 <template>
   <div class="head" :style="{width: _width}">
     
+    <!-- <Register></Register> -->
   </div>
 </template>
 
 <script>
+// import Register from 'comp/user/register'
 export default {
-props: {
+  components: {
+    // Register
+  },
+  data(){
+    return {
+     
+    }
+  },
+  methods: {
+    
+  },
+  props: {
   _width: {
     type: String,
     default: '1237px'
