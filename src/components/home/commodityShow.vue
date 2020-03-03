@@ -1,14 +1,21 @@
 <template>
   <div class="show_commodity" :style="{width: _width}">
       <Navbar @mouseon="curClassify"></Navbar>
+      <button class="latest" @click="latestSort">最新发布</button>
+        <!-- 搜索栏 -->
         <div class="searchbar">
                 <input type="text" id="search" value="查询商品" 
                 onfocus="if(value=='查询商品')value=''" onblur="if(!value)value='查询商品'" v-model="keyword" > 
-                <img src='~assets/search.png' class="mg" 
-                @mouseover="over"
-                @mouseleave="leave"
-                :class="{activited: isActivited}">
         </div>
+         <!-- 排序方式 -->
+        <div class="commoditySorts">
+            价格排序：
+            <select v-model="option" >
+                <option v-for="item in commoditySorts" :value="item.value" :key="item.id">{{item.value}}</option>
+                
+            </select>
+        </div>
+        <!-- 商品显示 -->
         <div v-for="(item, index) in curShowCommodities" :key="index"
         class="commodity"
         @mouseover="cover(index)"
@@ -21,7 +28,8 @@
             <p class="price">
                  {{item.price}}￥
             </p>
-        </div>
+            <p style="font-size: 16px">发布时间：{{item.addTime}}</p>
+        </div>      
   </div>
 </template>
 
@@ -46,6 +54,17 @@ export default {
     },
     data(){
         return {
+            option: '从小到大',
+            commoditySorts: [
+                     {
+                        id: 2,
+                        value: '从大到小'
+                    },
+                     {
+                        id: 3,
+                        value: '从小到大'
+                    }
+            ],
             curIndex: -1,
             isActivited: false,
             url: 'http://localhost:7170/images/',
@@ -139,13 +158,33 @@ export default {
             keyword: '',
         }
     },
+    watch: {
+        option: function(val) {
+            if(val=='从小到大')
+            this.curShowCommodities.sort((a, b) => {return a.price-b.price})
+             if(val=='从大到小')
+            this.curShowCommodities.sort((a, b) => {return b.price-a.price})
+        }
+    },
     computed: {
         curShowCommodities() {
             return this.currentshow.filter(
-                (commodity) => commodity.name.indexOf(this.keyword.trim())>-1 )
+                (commodity) => commodity.name.indexOf(this.keyword.trim())>-1 ).sort((a, b) => {return a.price-b.price})
         }
     },
     methods: {
+        latestSort(){
+            this.option = ''
+            this.curShowCommodities.sort((a, b) => {
+                let aTimeString = a.addTime.replace(/-/g, '/')
+                let bTimeString = b.addTime.replace(/-/g, '/')
+                console.log(aTimeString)
+                 console.log(bTimeString)
+                let bTime = new Date(bTimeString).getTime()
+                let aTime = new Date(aTimeString).getTime()
+                return bTime - aTime}
+                )
+        },
         curClassify(classifyId){
             if(classifyId!='')
             this.currentshow = this.commodities.filter( c => c.classifyName.classId == classifyId)
@@ -215,7 +254,7 @@ export default {
 }
 .commodity {
     width: 184px;
-    height: 280px;
+    height: 300px;
     float: left;
     background-color: cyan;
     margin: 70px 16px 0 10px;
@@ -238,5 +277,25 @@ export default {
 .commodity_activited {
     cursor: pointer;
     box-shadow: 0 0 17px rgb(104, 104, 236)
+}
+.commoditySorts {
+   position: relative;
+   left: 1000px;
+   width: 200px;
+   top: -30px;
+
+}
+.commoditySorts select {
+    font-size: 19px;
+    border: 1px solid rgb(216, 176, 176);
+    
+}
+.latest {
+    position: absolute;
+    top: 620px;
+    left: 230px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
 }
 </style>

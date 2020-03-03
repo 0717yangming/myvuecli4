@@ -1,6 +1,5 @@
 <template>
   <div class="head" :style="{width: _width}">
-    
     <!-- <Register></Register> -->
   </div>
 </template>

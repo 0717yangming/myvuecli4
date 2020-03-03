@@ -1,34 +1,29 @@
 <template>
-  <div class="navbar" >
-     <li 
-     class="classify"
-     @mouseover="navover"
-     @mouseleave="navleave"
-     >
+  <div class="navbar" @mouseover="navover"
+    @mouseleave="navleave">
+      
+     <li class="classify">
          <img src="~assets/up.jpg" alt="无法查看" v-if="navIndex==-1">
           <img src="~assets/down.jpg" alt="无法查看" v-if="navIndex==1">
-         <p>商品分类</p>
+         <p>{{navName}}</p>
      </li>
-     <ul  @mouseover="navover"
-          @mouseleave="navleave"
-          v-show="1==navIndex"
-          >
-           
+     <div v-if="navIndex==1">
+    
     <li  :class="{activited: curIndex==-2}"
-        @mouseover="over(-2,'')"
+        @mouseover="over(-2,'','')"
         @mouseleave="leave">
         <img src="~assets/bookcatalog.jpg" alt="无法查看">
          <p>所有商品</p>
     </li>
     <li v-for="(item, index) in navdata"
         :key="index"
-        @mouseover="over(index,item.classId)"
+        @mouseover="over(index,item.classId,item.className)"
         @mouseleave="leave"
         :class="{activited: curIndex==index}">
         <img :src="url+item.imagePath" alt="无法查看">
         <p>{{item.className}}</p>
-        </li>
-    </ul>
+    </li>
+    </div>
   </div>
 </template>
 
@@ -49,6 +44,7 @@ export default {
     },
     data(){
         return {
+            navName: "商品分类",
             navIndex: -1,
             curIndex: -1,
             url: 'http://localhost:7170/sysImages/',
@@ -89,16 +85,19 @@ export default {
             this.navIndex = 1;
         },
         navleave(){
-             this.navIndex = -1;
+            setTimeout(() => {this.navIndex = -1},100)
+             
         },
-        over(index,id){
+        over(index,id,name){
             this.navIndex = 1;
             this.curIndex = index
+            this.navName = name
+            if(name=='')
+            this.navName = "商品分类"
             // 如果id为空值，显示所有商品
             this.$emit('mouseon', id)
         },
         leave(){
-             this.navIndex = -1;
             this.curIndex =  -1
         }
     }
@@ -109,9 +108,12 @@ export default {
 .navbar {
     /* position: relative;
     left: 0px; */
-    float: left;
-    height: 100%;
+    position: absolute;
+    left: 10px;
+    top: 600px;
+    /* height: 100%; */
     width: 210px;
+    z-index: 100;
     /* background-color: rgb(165, 136, 136) */
 }
 .navbar li {
@@ -119,10 +121,13 @@ export default {
     text-decoration: none;
     text-align: center;
     vertical-align: middle;
-    font-size: 16px;
+    font-size: 18px;
     width: 100%px;
     height: 49px;
     margin: 1px;
+    background-color: rgba(27, 3, 3, 0.7);
+    color: white;
+    
     /* border: 1px solid red; */
 }
 .navbar li img {
@@ -135,7 +140,9 @@ export default {
     padding-top: 15px;
 }
 .navbar .activited {
-     cursor: pointer;
+    background-color: white;
+    color: black;
+    cursor: pointer;
 }
 .activited {
     background-color:rgb(195, 151, 252);

@@ -22,14 +22,14 @@ export default {
 
 <style scoped>
 .right {
-    width: 337px;
+    width: 420px;
     height: 100%;
     background-color: rgba(131, 77, 77, 0.185);
     float: right;
     margin-right: 1px;
 }
 .right_show {
-    width: 158px;
+    width: 200px;
     height: 192px;
     background-color: rgb(192, 156, 156);
     float: left;

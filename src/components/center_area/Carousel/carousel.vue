@@ -29,7 +29,7 @@ carousel: [
     position: relative;
     float: left;
     height: 100%;
-    width: 660px;
+    width: 780px;
     padding-left: 15px;
     padding-right: 15px;
     background-color: rgba(208, 248, 192, 0.555);
