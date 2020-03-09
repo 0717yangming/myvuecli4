@@ -1,12 +1,14 @@
 <template>
   <div id="app">
-    <Home></Home>
+      <Head _width="1263.5px"></Head>
+    <router-view></router-view>
+   
   </div>
 </template>
 
 <script>
-import Home from "comp/home/home";
-
+// import Home from "comp/home/home";
+import Head from 'comp/head/head'
 export default {
   name: 'app',
   mounted(){
@@ -14,11 +16,11 @@ export default {
   },
   data(){
     return {
-      
+    
     }
   },
   components: {
-    Home
+    Head
   }
 }
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div class="home_size">
-    <Head _width="1263.5px"></Head>
     <Center-area _width="1238px"></Center-area>
     <Commodity-show _width="1263px"></Commodity-show>
   </div>
@@ -8,14 +7,14 @@
 
 <script>
 import CenterArea from 'comp/center_area/center_area'
-import Head from 'comp/head/head'
 import CommodityShow from './commodityShow'
+
 export default {
     name: 'home',
     components: {
         CenterArea,
-        Head,
         CommodityShow
+        
     }
 }
 </script>

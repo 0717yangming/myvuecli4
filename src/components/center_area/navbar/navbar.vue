@@ -108,9 +108,9 @@ export default {
 .navbar {
     /* position: relative;
     left: 0px; */
-    position: absolute;
+    /* position: absolute;
     left: 10px;
-    top: 600px;
+    top: 500px; */
     /* height: 100%; */
     width: 210px;
     z-index: 100;

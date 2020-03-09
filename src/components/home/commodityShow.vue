@@ -1,6 +1,6 @@
 <template>
   <div class="show_commodity" :style="{width: _width}">
-      <Navbar @mouseon="curClassify"></Navbar>
+      <Navbar @mouseon="curClassify" class="navbar"></Navbar>
       <button class="latest" @click="latestSort">最新发布</button>
         <!-- 搜索栏 -->
         <div class="searchbar">
@@ -41,6 +41,7 @@ export default {
        Navbar
     },
     mounted() {
+        console.log(this.url)
          request({
             method: 'get',
             url: 'commodity'                           
@@ -67,7 +68,7 @@ export default {
             ],
             curIndex: -1,
             isActivited: false,
-            url: 'http://localhost:7170/images/',
+            url: this.$store.state.baseUrl,
             commodities: [
                 // {   
                 //     id: 1,
@@ -292,10 +293,14 @@ export default {
 }
 .latest {
     position: absolute;
-    top: 620px;
+    top: 520px;
     left: 230px;
     width: 100px;
     height: 30px;
     cursor: pointer;
+}
+.navbar {
+position: absolute;;
+top: 510px
 }
 </style>

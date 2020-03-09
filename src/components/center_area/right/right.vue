@@ -31,7 +31,7 @@ export default {
 .right_show {
     width: 200px;
     height: 192px;
-    background-color: rgb(192, 156, 156);
+    background-color: rgb(247, 242, 242);
     float: left;
     border: 3px solid white;
     border-radius: 15px;

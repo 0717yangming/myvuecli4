@@ -32,7 +32,7 @@ carousel: [
     width: 780px;
     padding-left: 15px;
     padding-right: 15px;
-    background-color: rgba(208, 248, 192, 0.555);
+    /* background-color: rgba(208, 248, 192, 0.555); */
     border-radius: 15px;
     box-shadow: -2px 7px 10px rgba(42, 42, 43, 0.808)
 }
